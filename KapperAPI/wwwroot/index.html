@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h2>Maak een afspraak</h2>
+    <form id="maakAfspraak" autocomplete="off">
+        <input type="text" id="naam" />
+        <input type="text" id="telnr" />
+        <input type="date" id="datum" />
+        <input type="time" id="tijd" min="09:00" max="18:00" />
+        <input type="submit" />
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#maakAfspraak").submit(function (e) {
+                e.preventDefault();
+                var apiUrl = "https://localhost:44300/api/Afspraak";
+                var data = {
+                    klantNaam: $("#naam").val(),
+                    klantTelNr: $("#telnr").val(),
+                    afspraakDatum: $("#datum").val(),
+                    afspraakTijd: $("#tijd").val()
+                };
+                $.ajax({
+                    url: apiUrl,
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (d) {
+                        alert("Saved Successfully.");
+                        document.getElementById("maakAfspraak").reset();
+                    },
+                    error: function () {
+                        alert("Error please try again.");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
